@@ -115,9 +115,36 @@ const removeActive = (elem) => {
   elem.classList.remove("active");
 }
 
+textarea.addEventListener("keydown", function(e) {
+  e.preventDefault()
+})
+
 document.addEventListener("keydown", function(e) {
   let elem = keyboard.getElementsByClassName(e.code)[0];
   switch (e.code) {
+    case "Tab":
+      e.preventDefault();
+      addActive(elem);
+      textarea.value += "    "
+      break;
+    case "Enter":
+      e.preventDefault();
+      addActive(elem);
+      textarea.value += "\n"
+      break;
+    case 'Backspace':
+      textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+      break;
+    case "AltLeft":
+    case "AltRight":
+      e.preventDefault();
+      addActive(elem);
+      break;
+    case "ControlLeft":
+    case "ControlRight":
+      e.preventDefault();
+      addActive(elem);
+      break;
     default:
       addActive(elem);
       textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
