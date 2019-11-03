@@ -78,6 +78,8 @@ const Layout = [
 let wrapper = document.createElement('div');
 let textarea = document.createElement('textarea');
 let keyboard = document.createElement('div');
+let lang = 'rus';
+let capslock = false;
 
 wrapper.className = "wrapper";
 textarea.id = "result";
@@ -115,12 +117,47 @@ const removeActive = (elem) => {
   elem.classList.remove("active");
 }
 
+const changeCase = () => {
+  let langElem = keyboard.querySelectorAll('div > .' + lang);
+  for (let i = 0; i < langElem.length; i++) {
+    langElem[i].querySelectorAll('span')[0].classList.toggle('hidden');
+    langElem[i].querySelectorAll('span')[1].classList.toggle('hidden');
+  }
+}
+
+const changeLang = () => {
+  let prevLang = keyboard.querySelectorAll('div > .' + lang);
+  for (let i = 0; i < prevLang.length; i++) {
+    prevLang[i].classList.toggle('hidden');
+    prevLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
+  }
+  if (lang === 'rus') {
+    lang = 'eng';
+    localStorage.setItem('lang', lang);
+  } else {
+    lang = 'rus';
+    localStorage.setItem('lang', lang);
+  }
+  let nextLang = keyboard.querySelectorAll('div > .' + lang);
+  for (let i = 0; i < nextLang.length; i++) {
+    nextLang[i].classList.toggle('hidden');
+    nextLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
+  }
+}
+
+if (localStorage.lang === 'eng') {
+  changeLang()
+};
+
 textarea.addEventListener("keydown", function(e) {
   e.preventDefault()
 })
 
 document.addEventListener("keydown", function(e) {
   let elem = keyboard.getElementsByClassName(e.code)[0];
+  if (e.shiftKey && e.altKey) {
+    changeLang();
+  }
   switch (e.code) {
     case "Tab":
       e.preventDefault();
@@ -132,8 +169,24 @@ document.addEventListener("keydown", function(e) {
       addActive(elem);
       textarea.value += "\n"
       break;
+    case 'CapsLock':
+      if(capslock) {
+        removeActive(elem);
+        capslock = false;
+      } else {
+        addActive(elem)
+        capslock = true;
+      }
+      e.preventDefault();
+      changeCase();
+      break;
     case 'Backspace':
       textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+      addActive(elem);
+      break;
+    case 'Delete':
+      e.preventDefault()
+      addActive(elem);
       break;
     case "AltLeft":
     case "AltRight":
@@ -145,6 +198,12 @@ document.addEventListener("keydown", function(e) {
       e.preventDefault();
       addActive(elem);
       break;
+    case "ShiftLeft":
+    case "ShiftRight":
+      e.preventDefault();
+      addActive(elem);
+      changeCase();
+      break;
     default:
       addActive(elem);
       textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
@@ -154,7 +213,19 @@ document.addEventListener("keydown", function(e) {
 
 document.addEventListener("keyup", function(e) {
   let elem = keyboard.getElementsByClassName(e.code)[0];
-  removeActive(elem);
+  
+  switch (e.code) {
+    case "ShiftLeft":
+    case "ShiftRight":
+      e.preventDefault();
+      changeCase();
+      break;
+    case "CapsLock":
+      break;
+    default:
+      removeActive(elem);
+      break;
+  }
 })
 
 document.body.append(wrapper);
