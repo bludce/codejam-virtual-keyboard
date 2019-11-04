@@ -232,7 +232,7 @@ document.addEventListener("keyup", function(e) {
   }
 })
 
-document.addEventListener("mousedown", function(e) {
+keyboard.addEventListener("mousedown", function(e) {
   if (e.target.tagName !== 'SPAN') {
     return;
   } else {
@@ -293,7 +293,7 @@ document.addEventListener("mousedown", function(e) {
   }
 })
 
-document.addEventListener("mouseup", function(e) {
+keyboard.addEventListener("mouseup", function(e) {
     let elem = e.target.closest(".key");
     switch (elem.classList[1]) {
       case "ShiftLeft":
@@ -315,6 +315,19 @@ document.addEventListener("mouseup", function(e) {
         removeActive(elem);
         break;
     }
+})
+
+keyboard.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+})
+
+keyboard.addEventListener("dblclick", function(e) {
+  e.preventDefault();
+})
+
+keyboard.addEventListener("mousemove", function(e) {
+  e.preventDefault();
+  removeActive(e.target.closest(".key"));
 })
 
 document.body.append(wrapper);
