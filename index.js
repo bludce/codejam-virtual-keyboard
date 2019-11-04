@@ -155,14 +155,15 @@ textarea.addEventListener("keydown", function(e) {
 
 document.addEventListener("keydown", function(e) {
   let elem = keyboard.getElementsByClassName(e.code)[0];
-  if (e.shiftKey && e.altKey) {
+  if (e.altKey && e.ctrlKey) {
+    addActive(elem);
     changeLang();
   }
   switch (e.code) {
     case "Tab":
       e.preventDefault();
       addActive(elem);
-      textarea.value += "    "
+      textarea.value += "    ";
       break;
     case "Enter":
       e.preventDefault();
@@ -218,6 +219,7 @@ document.addEventListener("keyup", function(e) {
     case "ShiftLeft":
     case "ShiftRight":
       e.preventDefault();
+      removeActive(elem);
       changeCase();
       break;
     case "CapsLock":
