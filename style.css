@@ -46,14 +46,23 @@ textarea {
   transition: border-radius .3s,background .2s;
 }
 
-.hidden {
-  display: none;
-}
+
 
 .active {
   background-color: red;
 }
 
-.space {
+.Space {
   width: 225px;
+}
+
+.caseDown,
+.caseUp {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+}
+
+.hidden {
+  display: none;
 }

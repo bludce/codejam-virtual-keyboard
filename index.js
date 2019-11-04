@@ -214,7 +214,6 @@ document.addEventListener("keydown", function(e) {
 
 document.addEventListener("keyup", function(e) {
   let elem = keyboard.getElementsByClassName(e.code)[0];
-  
   switch (e.code) {
     case "ShiftLeft":
     case "ShiftRight":
@@ -228,6 +227,91 @@ document.addEventListener("keyup", function(e) {
       removeActive(elem);
       break;
   }
+})
+
+document.addEventListener("mousedown", function(e) {
+  if (e.target.tagName !== 'SPAN') {
+    return;
+  } else {
+    let elem = e.target.closest(".key");
+    switch (elem.classList[1]) {
+      case "Tab":
+        e.preventDefault();
+        addActive(elem);
+        textarea.value += "    ";
+        break;
+      case "Enter":
+        e.preventDefault();
+        addActive(elem);
+        textarea.value += "\n"
+        break;
+      case 'Backspace':
+        textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+        addActive(elem);
+        break;
+      case 'CapsLock':
+        console.log(capslock)
+        e.preventDefault();
+        if(capslock) {
+          removeActive(e.target.closest(".key"));
+          capslock = false;
+        } else {
+          addActive(e.target.closest(".key"));
+          capslock = true;
+        }
+        changeCase();
+        break;
+      case 'Delete':
+        e.preventDefault()
+        addActive(elem);
+        break;
+      case "AltLeft":
+      case "AltRight":
+        e.preventDefault();
+        addActive(elem);
+        break;
+      case "ControlLeft":
+      case "ControlRight":
+        e.preventDefault();
+        addActive(elem);
+        break;
+      case "ShiftLeft":
+      case "ShiftRight":
+        e.preventDefault();
+        addActive(elem);
+        changeCase();
+        break;
+      default:
+        textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
+        break;
+    }
+    addActive(elem);
+    
+  }
+})
+
+document.addEventListener("mouseup", function(e) {
+    let elem = e.target.closest(".key");
+    switch (elem.classList[1]) {
+      case "ShiftLeft":
+      case "ShiftRight":
+        e.preventDefault();
+        removeActive(elem);
+        changeCase();
+        break;
+      case "CapsLock":
+        console.log(capslock)
+        e.preventDefault();
+        if(capslock !== true) {
+          removeActive(e.target.closest(".key"));
+        } else {
+          addActive(e.target.closest(".key"));
+        }
+        break;
+      default:
+        removeActive(elem);
+        break;
+    }
 })
 
 document.body.append(wrapper);
