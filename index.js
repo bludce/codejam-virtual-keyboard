@@ -64,7 +64,7 @@ const Layout = [
   ],
   [
     ["ControlLeft", "Ctrl", "Ctrl", "Ctrl", "Ctrl"],
-    ["Win", "Win", "Win", "Win", "Win"],
+    ["MetaLeft", "Win", "Win", "Win", "Win"],
     ["AltLeft", "Alt", "Alt", "Alt", "Alt"],
     ["Space", " ", " ", " ", " "],
     ["AltRight", "Alt", "Alt", "Alt", "Alt"],
@@ -159,7 +159,10 @@ document.addEventListener("keydown", function(e) {
     addActive(elem);
     changeLang();
   }
+  console.log(e.code)
   switch (e.code) {
+    case "MetaLeft":
+      break;
     case "Tab":
       e.preventDefault();
       addActive(elem);
