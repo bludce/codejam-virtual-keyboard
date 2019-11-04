@@ -24,6 +24,11 @@ textarea {
   margin-bottom: 50px;
 }
 
+.keyboard {
+  width: 715px;
+  margin: 0 auto;
+}
+
 .row {
   display: flex;
   width: 100%;
@@ -38,22 +43,64 @@ textarea {
   font-weight: 500;
   line-height: 40px;
   text-align: center;
-  color: #fff;
-  background: #3a424e;
+  color: #2d2d2d;
+  background: #fff;
+  border: 1px solid #2d2d2d;
   border-radius: 3px;
   cursor: pointer;
   user-select: none;
-  transition: border-radius .3s,background .2s;
+  transition: background .2s;
 }
 
+.KeyW,
+.KeyA,
+.KeyS,
+.KeyD {
+  background-color: #ff6363;
+}
 
+.ArrowUp,
+.ArrowDown,
+.ArrowLeft,
+.ArrowRight {
+  background-color: #ff6363;
+}
+
+.CapsLock {
+  width: 75px;
+}
+
+.Tab {
+  width: 60px;
+}
+
+.Backspace {
+  width: 106px;
+}
+
+.Enter {
+  width: 117px;
+}
+
+.ShiftLeft {
+  width: 90px;
+}
+
+.ShiftRight {
+  width: 103px;
+}
+
+.ControlLeft,
+.ControlRight {
+  width: 56px;
+}
 
 .active {
-  background-color: red;
+  background-color: #63ffb4;
 }
 
 .Space {
-  width: 225px;
+  width: 304px;
 }
 
 .caseDown,
