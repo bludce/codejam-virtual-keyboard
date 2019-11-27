@@ -155,9 +155,10 @@ textarea.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   const elem = keyboard.getElementsByClassName(e.code)[0];
-  if (e.altKey && e.ctrlKey) {
+  if (e.altKey && e.ctrlKey && (e.keyCode === 18 || e.keyCode === 17)) {
     addActive(elem);
     changeLang();
+    return false;
   }
   switch (e.code) {
     case 'MetaLeft':
