@@ -109,6 +109,17 @@ for (let i = 0; i < Layout.length; i += 1) {
   keyboard.appendChild(row);
 }
 
+function throttle(func, milliseconds) {
+  var lastCall = 0;
+  return function () {
+      var now = Date.now();
+      if (lastCall + milliseconds < now) {
+          lastCall = now;
+          return func.apply(this, arguments);
+      }
+  };
+}
+
 const addActive = (elem) => {
   elem.classList.add('active');
 };
@@ -153,7 +164,7 @@ textarea.addEventListener('keydown', (e) => {
   e.preventDefault();
 });
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', throttle((e) => {
   const elem = keyboard.getElementsByClassName(e.code)[0];
   if (e.altKey && e.ctrlKey && (e.keyCode === 18 || e.keyCode === 17)) {
     addActive(elem);
@@ -213,7 +224,7 @@ document.addEventListener('keydown', (e) => {
       textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
       break;
   }
-});
+}, 10));
 
 document.addEventListener('keyup', (e) => {
   const elem = keyboard.getElementsByClassName(e.code)[0];
